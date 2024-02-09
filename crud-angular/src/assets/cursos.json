@@ -2,6 +2,11 @@
     {
         "_id": "1", 
         "nome": "Angular", 
-        "categoria": "Front-end"
+        "categoria": "front-end"
+    },
+    {
+        "_id": "2", 
+        "nome": "Spring", 
+        "categoria": "back-end"
     }
 ]
