@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Curso } from '../model/curso';
 
 @Component({
   selector: 'app-cursos',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './cursos.component.scss'
 })
 export class CursosComponent {
+  cursos: Curso[] = [
+    {_id: "1", nome: "Angular", categoria: "front-end"}
+  ];
+  displayedColumns = ['nome', 'categoria']
 
+  constructor(){
+  }
 }
