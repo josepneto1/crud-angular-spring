@@ -5,11 +5,13 @@ import { AppMaterialModule } from '../compartilhado/app-material/app-material.mo
 import { CompartilhadoModule } from '../compartilhado/compartilhado.module';
 import { CursosRoutingModule } from './cursos-routing.module';
 import { CursosComponent } from './cursos/cursos.component';
+import { CursosFormComponent } from './cursos-form/cursos-form.component';
 
 
 @NgModule({
   declarations: [
-    CursosComponent
+    CursosComponent,
+    CursosFormComponent
   ],
   imports: [
     CommonModule,
