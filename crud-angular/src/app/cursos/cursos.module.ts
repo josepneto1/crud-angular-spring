@@ -7,12 +7,14 @@ import { CompartilhadoModule } from '../compartilhado/compartilhado.module';
 import { CursosFormComponent } from './cursos-form/cursos-form.component';
 import { CursosRoutingModule } from './cursos-routing.module';
 import { CursosComponent } from './cursos/cursos.component';
+import { CursosListaComponent } from './cursos-lista/cursos-lista.component';
 
 
 @NgModule({
   declarations: [
     CursosComponent,
-    CursosFormComponent
+    CursosFormComponent,
+    CursosListaComponent
   ],
   imports: [
     CommonModule,
