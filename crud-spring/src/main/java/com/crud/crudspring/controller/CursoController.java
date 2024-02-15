@@ -1,15 +1,12 @@
 package com.crud.crudspring.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 // import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.crud.crudspring.model.Curso;
 import com.crud.crudspring.repository.CursoRepository;
@@ -30,7 +27,14 @@ public class CursoController {
     public List<Curso> lista(){
         return cursoRepository.findAll();
     }
-    
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Curso> buscarPorId(@PathVariable Long id){
+        return cursoRepository.findById(id)
+                .map(registro -> ResponseEntity.ok().body(registro))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     //@RequestMapping(method = RequestMethod.POST)
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
