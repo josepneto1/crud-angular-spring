@@ -7,7 +7,8 @@
         <div class="column-flex mat-elevation-z8">
             <app-cursos-lista 
             *ngIf="cursos$ | async as cursos; else loading"
-            [cursos]="cursos">
+            [cursos]="cursos"
+            (add)="onAdd()">
             
             </app-cursos-lista>
             

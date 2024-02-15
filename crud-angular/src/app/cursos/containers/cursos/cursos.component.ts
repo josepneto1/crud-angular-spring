@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, catchError, of } from 'rxjs';
-import { ErrorDialogComponent } from '../../compartilhado/components/error-dialog/error-dialog.component';
-import { Curso } from '../model/curso';
-import { CursosService } from '../services/cursos.service';
+import { ErrorDialogComponent } from '../../../compartilhado/components/error-dialog/error-dialog.component';
+import { Curso } from '../../model/curso';
+import { CursosService } from '../../services/cursos.service';
 
 @Component({
   selector: 'app-cursos',

@@ -4,10 +4,10 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppMaterialModule } from '../compartilhado/app-material/app-material.module';
 import { CompartilhadoModule } from '../compartilhado/compartilhado.module';
-import { CursosFormComponent } from './cursos-form/cursos-form.component';
+import { CursosListaComponent } from '../compartilhado/components/cursos-lista/cursos-lista.component';
+import { CursosFormComponent } from './containers/cursos-form/cursos-form.component';
+import { CursosComponent } from './containers/cursos/cursos.component';
 import { CursosRoutingModule } from './cursos-routing.module';
-import { CursosComponent } from './cursos/cursos.component';
-import { CursosListaComponent } from './cursos-lista/cursos-lista.component';
 
 
 @NgModule({
