@@ -44,4 +44,10 @@ export class CursosComponent implements OnInit {
   onAdd() {
     this.router.navigate(['new'], {relativeTo: this.route})
   }
+
+  onEdit(curso: Curso){
+    if (curso && curso._id) {
+        this.router.navigate(['edit', curso._id], {relativeTo: this.route});
+    }
+  }
 }
