@@ -40,11 +40,31 @@ public class CursoController {
     @ResponseStatus(code = HttpStatus.CREATED)
     public Curso criar(@RequestBody Curso curso){
         return cursoRepository.save(curso);
-  
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Curso> atualizar(@PathVariable Long id, @RequestBody Curso curso){
+        return cursoRepository.findById(id)
+                .map(registro -> {
+                    registro.setNome(curso.getNome());
+                    registro.setCategoria(curso.getCategoria());
+                    Curso atualizado = cursoRepository.save(registro);
+                    return ResponseEntity.ok().body(atualizado);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 }
 
-// o response entity é mais útil quando há necessidade de manipular a respoosta
+
+
+
+
+
+
+
+
+
+// o response entity é mais útil quando há necessidade de manipular a resposta
 // @PostMapping
 // public ResponseEntity<Curso> criar(@RequestBody Curso curso){
 //     return ResponseEntity.status(HttpStatus.CREATED)

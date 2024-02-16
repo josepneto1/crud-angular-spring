@@ -20,12 +20,25 @@ export class CursosService {
       tap(cursos => console.log(cursos))
     );
   }
-
-  save(curso: Partial<Curso>){
-    return this.httpClient.post<Curso>(this.API, curso);
-  }
-
+  
   buscarPorId(id: string){
       return this.httpClient.get<Curso>(`${this.API}/${id}`);
   }
+
+  save(curso: Partial<Curso>){
+    if (curso._id){
+      return this.atualizar(curso)
+    }
+    return this.criar(curso);
+    
+  }
+
+  private criar(curso: Partial<Curso>){
+    return this.httpClient.post<Curso>(this.API, curso);
+  }
+  
+  private atualizar(curso: Partial<Curso>){
+    return this.httpClient.put<Curso>(`${this.API}/${curso._id}`, curso);
+  }
+  
 }
