@@ -41,4 +41,8 @@ export class CursosService {
     return this.httpClient.put<Curso>(`${this.API}/${curso._id}`, curso);
   }
   
+  deletar(id: string){
+    return this.httpClient.delete(`${this.API}/${id}`);
+  }
+  
 }
