@@ -1,7 +1,6 @@
 package com.crud.crudspring.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 // import lombok.AllArgsConstructor;
@@ -50,6 +49,16 @@ public class CursoController {
                     registro.setCategoria(curso.getCategoria());
                     Curso atualizado = cursoRepository.save(registro);
                     return ResponseEntity.ok().body(atualizado);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+        return cursoRepository.findById(id)
+                .map(registro -> {
+                    cursoRepository.deleteById(id);
+                    return ResponseEntity.noContent().<Void>build();
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
