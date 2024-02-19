@@ -5,7 +5,12 @@
     <mat-card-content>
         <form [formGroup]="form">
             <mat-form-field class="full-width">
-                <input matInput placeholder="Nome" formControlName="nome">
+                <mat-label>Nome</mat-label>
+                <input matInput formControlName="nome" #nome>
+                <mat-hint align="end">{{nome.value.length}}/100</mat-hint>
+                @if (form.get('nome')?.invalid) {
+                    <mat-error>{{getErrorMessage('nome')}}</mat-error>
+                  }
             </mat-form-field>
             
             <mat-form-field class="full-width">
@@ -15,6 +20,9 @@
                         <mat-option value="front-end">Front-End</mat-option>
                         <mat-option value="back-end">Back-End</mat-option>
                 </mat-select>
+                @if (form.get('categoria')?.invalid) {
+                    <mat-error>{{getErrorMessage('categoria')}}</mat-error>
+                  }
             </mat-form-field>
         </form>
     </mat-card-content>
