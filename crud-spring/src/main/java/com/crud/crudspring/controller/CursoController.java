@@ -2,40 +2,44 @@ package com.crud.crudspring.controller;
 
 import java.util.List;
 
+import com.crud.crudspring.service.CursoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.springframework.http.HttpStatus;
-// import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.crud.crudspring.model.Curso;
-import com.crud.crudspring.repository.CursoRepository;
 
 @Validated
 @RestController
 @RequestMapping("/api/cursos")
-//@AllArgsConstructor se usar não precisa se construtor
 public class CursoController {
 
-    private final CursoRepository cursoRepository;
+    private final CursoService cursoService;
 
-    public CursoController(CursoRepository cursoRepository) { // pode ser substituído por @AllArgsConstrutor
-        this.cursoRepository = cursoRepository;
+    public CursoController(CursoService cursoService) {
+        this.cursoService = cursoService;
     }
 
     //@RequestMapping(method = RequestMethod.GET)
     @GetMapping
-    public List<Curso> lista(){
-        return cursoRepository.findAll();
+    public @ResponseBody List<Curso> lista(){
+        return cursoService.lista();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Curso> buscarPorId(@PathVariable @NotNull @Positive Long id){
-        return cursoRepository.findById(id)
-                .map(registro -> ResponseEntity.ok().body(registro))
+    public ResponseEntity<?> buscarPorId(@PathVariable @NotNull @Positive Long id){
+        return cursoService.buscarPorId(id)
+                .map(registro -> {
+                    if (registro.getStatus().equals("Ativo")) {
+                        return ResponseEntity.ok().body(registro);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                })
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -43,30 +47,23 @@ public class CursoController {
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public Curso criar(@RequestBody @Valid Curso curso){
-        return cursoRepository.save(curso);
+        return cursoService.criar(curso);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Curso> atualizar(@PathVariable @NotNull @Positive Long id,
                                            @RequestBody @Valid Curso curso){
-        return cursoRepository.findById(id)
-                .map(registro -> {
-                    registro.setNome(curso.getNome());
-                    registro.setCategoria(curso.getCategoria());
-                    Curso atualizado = cursoRepository.save(registro);
-                    return ResponseEntity.ok().body(atualizado);
-                })
+        return cursoService.atualizar(id, curso)
+                .map(registro -> ResponseEntity.ok().body(registro))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable @NotNull @Positive Long id){
-        return cursoRepository.findById(id)
-                .map(registro -> {
-                    cursoRepository.deleteById(id);
-                    return ResponseEntity.noContent().<Void>build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+        if (cursoService.deletar(id)) {
+            return ResponseEntity.noContent().<Void>build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
 

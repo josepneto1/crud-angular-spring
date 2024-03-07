@@ -6,10 +6,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.validator.constraints.Length;
 
 @Data
 @Entity
+@SQLDelete(sql = "update curso set status = 'Inativo' where id = ?")
 public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,5 +29,11 @@ public class Curso {
     @Pattern(regexp = "Back-end|Front-end")
     @Column(length = 20, nullable = false)
     private String categoria;
+
+    @NotNull
+    @Length(max = 10)
+    @Pattern(regexp = "Ativo|Inativo")
+    @Column(length = 10, nullable = false)
+    private String status = "Ativo";
 
 }
