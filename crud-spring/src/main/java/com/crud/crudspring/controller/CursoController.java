@@ -2,16 +2,14 @@ package com.crud.crudspring.controller;
 
 import java.util.List;
 
+import com.crud.crudspring.dto.CursoDTO;
 import com.crud.crudspring.service.CursoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import com.crud.crudspring.model.Curso;
 
 @Validated
 @RestController
@@ -26,25 +24,25 @@ public class CursoController {
 
     //@RequestMapping(method = RequestMethod.GET)
     @GetMapping
-    public @ResponseBody List<Curso> lista(){
+    public @ResponseBody List<CursoDTO> lista(){
         return cursoService.lista();
     }
 
     @GetMapping("/{id}")
-    public Curso buscarPorId(@PathVariable @NotNull @Positive Long id){
+    public CursoDTO buscarPorId(@PathVariable @NotNull @Positive Long id){
         return cursoService.buscarPorId(id);
     }
 
     //@RequestMapping(method = RequestMethod.POST)
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Curso criar(@RequestBody @Valid Curso curso){
+    public CursoDTO criar(@RequestBody @Valid @NotNull CursoDTO curso){
         return cursoService.criar(curso);
     }
 
     @PutMapping("/{id}")
-    public Curso atualizar(@PathVariable @NotNull @Positive Long id,
-                                           @RequestBody @Valid Curso curso){
+    public CursoDTO atualizar(@PathVariable @NotNull @Positive Long id,
+                              @RequestBody @Valid @NotNull CursoDTO curso){
         return cursoService.atualizar(id, curso);
     }
 
