@@ -31,16 +31,8 @@ public class CursoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscarPorId(@PathVariable @NotNull @Positive Long id){
-        return cursoService.buscarPorId(id)
-                .map(registro -> {
-                    if (registro.getStatus().equals("Ativo")) {
-                        return ResponseEntity.ok().body(registro);
-                    } else {
-                        return ResponseEntity.notFound().build();
-                    }
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public Curso buscarPorId(@PathVariable @NotNull @Positive Long id){
+        return cursoService.buscarPorId(id);
     }
 
     //@RequestMapping(method = RequestMethod.POST)
@@ -51,19 +43,15 @@ public class CursoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Curso> atualizar(@PathVariable @NotNull @Positive Long id,
+    public Curso atualizar(@PathVariable @NotNull @Positive Long id,
                                            @RequestBody @Valid Curso curso){
-        return cursoService.atualizar(id, curso)
-                .map(registro -> ResponseEntity.ok().body(registro))
-                .orElse(ResponseEntity.notFound().build());
+        return cursoService.atualizar(id, curso);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable @NotNull @Positive Long id){
-        if (cursoService.deletar(id)) {
-            return ResponseEntity.noContent().<Void>build();
-        }
-        return ResponseEntity.notFound().build();
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletar(@PathVariable @NotNull @Positive Long id){
+        cursoService.deletar(id);
     }
 }
 
