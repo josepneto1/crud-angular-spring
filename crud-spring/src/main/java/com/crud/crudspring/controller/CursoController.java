@@ -24,7 +24,7 @@ public class CursoController {
 
     //@RequestMapping(method = RequestMethod.GET)
     @GetMapping
-    public @ResponseBody List<CursoDTO> lista(){
+    public List<CursoDTO> lista(){
         return cursoService.lista();
     }
 

@@ -9,7 +9,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +32,7 @@ public class CursoService {
                 .collect(Collectors.toList());
     }
 
-    public CursoDTO buscarPorId(@PathVariable @NotNull @Positive Long id){
+    public CursoDTO buscarPorId(@NotNull @Positive Long id){
         return cursoRepository.findById(id)
                 .map(cursoMapper::toDTO) //curso -> cursoMapper.toDTO(curso)
                 .orElseThrow(() -> new RegistroNaoEncontradoException(id));
@@ -47,7 +46,7 @@ public class CursoService {
         return cursoRepository.findById(id)
                 .map(registro -> {
                     registro.setNome(curso.nome());
-                    registro.setCategoria(curso.categoria());
+                    registro.setCategoria(cursoMapper.converteValorCategoria(curso.categoria()));
                     return cursoMapper.toDTO(cursoRepository.save(registro));
                 }).orElseThrow(() -> new RegistroNaoEncontradoException(id));
     }

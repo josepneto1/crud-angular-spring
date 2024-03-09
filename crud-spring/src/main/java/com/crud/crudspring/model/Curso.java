@@ -1,17 +1,22 @@
 package com.crud.crudspring.model;
 
+import com.crud.crudspring.enums.Categoria;
+import com.crud.crudspring.enums.Status;
+import com.crud.crudspring.enums.converters.CategoriaConverter;
+import com.crud.crudspring.enums.converters.StatusConverter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 @Data
 @Entity
 @SQLDelete(sql = "update curso set status = 'Inativo' where id = ?")
+@Where(clause = "status = 'Ativo'")
 public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,15 +30,13 @@ public class Curso {
     private String nome;
 
     @NotNull
-    @Length(max = 10)
-    @Pattern(regexp = "Back-end|Front-end")
-    @Column(length = 20, nullable = false)
-    private String categoria;
+    @Column(length = 10, nullable = false)
+    @Convert(converter = CategoriaConverter.class)
+    private Categoria categoria;
 
     @NotNull
-    @Length(max = 10)
-    @Pattern(regexp = "Ativo|Inativo")
     @Column(length = 10, nullable = false)
-    private String status = "Ativo";
+    @Convert(converter = StatusConverter.class)
+    private Status status = Status.ATIVO;
 
 }
