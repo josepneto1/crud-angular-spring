@@ -1,10 +1,13 @@
 package com.crud.crudspring.dto;
 
+import com.crud.crudspring.model.Aula;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 
 public record CursoDTO(
         @JsonProperty("_id")
@@ -18,7 +21,9 @@ public record CursoDTO(
         @NotNull
         @Length(max = 10)
         @Pattern(regexp = "Back-end|Front-end")
-        String categoria) {
+        String categoria,
+
+        List<Aula> aulas) {
 
 }
 

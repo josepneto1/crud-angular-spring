@@ -43,6 +43,5 @@ public class Curso {
     private Status status = Status.ATIVO;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "curso")
-    @JoinColumn(name = "curso_id")
     private List<Aula> aulas = new ArrayList<>();
 }
