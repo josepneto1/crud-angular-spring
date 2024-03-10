@@ -1,6 +1,5 @@
 package com.crud.crudspring.dto;
 
-import com.crud.crudspring.model.Aula;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,7 +22,7 @@ public record CursoDTO(
         @Pattern(regexp = "Back-end|Front-end")
         String categoria,
 
-        List<Aula> aulas) {
+        List<AulaDTO> aulas) {
 
 }
 
